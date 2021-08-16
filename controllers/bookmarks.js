@@ -49,4 +49,18 @@ bookmarkRoute.put('/:id', (req, res) => {
     })
 })
 
+// DELETE
+/*
+curl -X DELETE \
+    'http://localhost:3003/bookmark/60c280d6ed29ffbd519bc29d'
+*/
+bookmarkRoute.delete('/:id', (req, res) => {
+    Bookmark.findByIdAndRemove(req.params.id, (err, deletedBookmark) => {
+        if (err) {
+            res.status(400).json({ error: err})
+        }
+        res.status(200).json({'deleted_bookmark': deletedBookmark})
+    })
+})
+
 module.exports = bookmarkRoute
