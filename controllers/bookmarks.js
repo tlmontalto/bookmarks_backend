@@ -33,4 +33,20 @@ bookmarkRoute.post('/', (req, res) => {
     })
 })
 
-module.exports = bookmark
+// UPDATE
+/*
+curl -X PUT \
+    -H "Content-Type: application/json" \
+    -d '{"title":"Duck Duck Go"}' \
+    'http://localhost:3003/bookmark/60c280d6ed29ffbd519bc29d'
+*/
+bookmarkRoute.put('/:id', (req, res) => {
+    Bookmark.findByIdAndUpdate(req.params.id, req.body, { new: true }, (err, updatedBookmark) => {
+        if (err) {
+            res.status(400).json({ error: err })
+        }
+        res.status(200).json(updatedBookmark)
+    })
+})
+
+module.exports = bookmarkRoute
